@@ -1,0 +1,20 @@
+{
+  "name": "01_create-project",
+  "version": "1.0.0",
+  "description": "First project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "Daniel",
+  "license": "ISC",
+  "private": "true",
+  "dependencies": {
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
