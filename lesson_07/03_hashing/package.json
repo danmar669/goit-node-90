@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "md5": "^2.3.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "03_hashing",
+  "version": "1.0.0",
+  "main": "server.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
