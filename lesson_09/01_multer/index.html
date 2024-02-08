@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send File</title>
+</head>
+<body>
+    <form id="form">
+        <input type="file" name="file" />
+        <button type="submit">Send file</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('form')
+        form.addEventListener('submit', function(e) {
+            e.preventDefault()
+
+            const formData = new FormData()
+            console.log(this.elements)
+            formData.append('image', this.elements.file.files[0])
+
+            const url = 'http://localhost:3000/upload'
+
+            fetch(url, {
+                method: 'post',
+                body: formData
+            }).catch((err) => console.error(err))
+        })
+    </script>
+</body>
+</html>
