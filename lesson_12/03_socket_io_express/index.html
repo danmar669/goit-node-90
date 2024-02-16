@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <script src="/socket.io/socket.io.js"></script>
+        <title>Chat GoIT</title>
+    </head>
+    <body>
+        <form id="form">
+            <input type="text" id="input" name="message" />
+            <button type="submit">Send</button>
+        </form>
+
+        <ul id="history"></ul>
+
+        <script>
+            const username = prompt("What your name?", "Anonym");
+            const socket = io();
+
+            const history = document.getElementById("history");
+            const form = document.getElementById("form");
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                const message = event.target.message.value;
+
+                if (message) {
+                    socket.emit("chatMessage", `${username}: ${message}`);
+                    addMessage(`${username}: ${message}`);
+                    event.target.message.value = "";
+                }
+            });
+
+            function addMessage(message) {
+                const li = document.createElement("li");
+                li.innerText = message;
+                history.appendChild(li);
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+
+            socket.on("chatMessage", (message) => {
+                addMessage(message);
+            });
+        </script>
+    </body>
+</html>

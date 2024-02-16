@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js" integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4" crossorigin="anonymous"></script>
+    <title>Socket IO Example</title>
+</head>
+<body>
+    <h1>Socket IO</h1>
+
+    <h2>Status: <span id="status">Disconnected</span></h2>
+    <h2>Message</h2>
+    <ul id="messages"></ul>
+
+    <script>
+        const status = document.getElementById('status')
+        const messages = document.getElementById('messages')
+
+        const appendMessage = (content) => {
+            const item = document.createElement('li')
+            item.textContent = content
+            messages.appendChild(item)
+        }
+
+        const socket = io('http://localhost:5000')
+
+        socket.on('connect', () => {
+            status.innerText = 'Connected'
+            appendMessage(`event: connect | session id ${socket.id}`)
+        })
+
+        socket.on('connect_error', (error) => {
+            status.innerText = 'Connected error'
+            appendMessage(`event: connect_error | session id ${socket.id} | error: ${error.message} `)
+        })
+
+        socket.on('disconnected', (reason) => {
+            status.innerText = 'Disconnected'
+            appendMessage(`event: disconnected | reason: ${reason} `)
+        })
+
+        socket.onAny((event, ...args) => {
+            appendMessage(`event: ${event} | args: ${args}`)
+        })
+
+        socket.on('chatMessage', (message) => {
+            console.log('<-- ', message)
+        })
+    </script>
+</body>
+</html>
